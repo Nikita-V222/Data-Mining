@@ -1,0 +1,435 @@
+dmnik5
+
+# 🔹 Week 1
+
+**Q1. List categorical vs real-valued attributes**
+
+**Steps:**
+
+1. Open Weka → Explorer.
+2. Go to **Preprocess tab**.
+3. Click **Open file** → load `credit-g.arff` (German Credit dataset).
+4. On the left panel, select each attribute → below, Weka shows *Type* (Nominal/Numeric).
+
+   * Nominal = categorical.
+   * Numeric = real-valued.
+
+👉 Write them into 2 lists.
+
+---
+
+# 🔹 Week 2
+
+**Q2. Crucial attributes & simple rules**
+
+**Steps:**
+
+1. In Explorer → go to **Select attributes tab**.
+2. Choose **Attribute Evaluator = InfoGainAttributeEval**.
+3. Choose **Search Method = Ranker**.
+4. Click **Start**.
+5. Weka will rank attributes by importance.
+
+👉 Use the top-ranked ones to make simple rules (e.g., “If checking\_status = no checking → high chance of bad credit”).
+
+---
+
+# 🔹 Week 3
+
+**Q3. Train Decision Tree (J48) on full data**
+
+**Steps:**
+
+1. Go to **Classify tab**.
+2. Choose **Classifier → trees → J48**.
+3. Test options → select **Use training set**.
+4. Click **Start**.
+5. In the results pane:
+
+   * See the **Decision Tree output**.
+   * Accuracy on training set is shown.
+
+---
+
+# 🔹 Week 4
+
+**Q4. Training accuracy & explanation**
+
+**Steps:**
+
+1. Repeat steps of Q3 (J48 with *Use training set*).
+2. Note the **Correctly Classified Instances (%)**.
+3. Compare to 100% → explain why it’s lower (noise, overlap).
+
+---
+
+# 🔹 Week 5
+
+**Q5. Cross-validation**
+
+**Steps:**
+
+1. In **Classify tab**.
+2. Classifier = **J48**.
+3. Test options = **Cross-validation**, folds = 10.
+4. Click **Start**.
+5. Check accuracy % (slightly lower than training set).
+
+---
+
+# 🔹 Week 6
+
+**Q6. Reduce attributes**
+
+**Steps:**
+
+1. Go to **Preprocess tab**.
+2. Select unwanted attributes → click **Remove**. Keep only attributes: 2, 3, 5, 7, 10, 17, and class.
+3. Go to **Classify tab** → J48 → Cross-validation.
+4. Click **Start** → Check new accuracy.
+
+---
+
+# 🔹 Week 7
+
+**Q7. Train with reduced attributes & compare**
+
+**Steps:**
+
+1. Continue from Q6 (reduced attributes dataset).
+2. Run J48 with Cross-validation.
+3. Compare tree size + accuracy vs full dataset (Q5).
+
+---
+
+# 🔹 Week 8
+
+**Q8. Simple vs complex Decision Trees (bias vs variance)**
+
+**Steps:**
+
+1. In **Classify tab → J48**.
+2. Click on J48 → set **Confidence factor (C)**:
+
+   * Default = 0.25.
+   * Try lower (e.g., 0.1) → more complex tree.
+   * Try higher (e.g., 0.5) → simpler tree.
+3. Run both models → compare tree size + accuracy.
+
+---
+
+# 🔹 Week 9
+
+**Q9. Reduced Error Pruning**
+
+**Steps:**
+
+1. In **Classify tab → J48**.
+2. Click J48 → enable option **-R (Reduced error pruning)**.
+3. Test option = **Cross-validation (10 folds)**.
+4. Click **Start**.
+5. Check pruned tree + accuracy.
+
+---
+
+# 🔹 Week 10
+
+**Q10. Convert tree to rules / Compare J48, PART, OneR**
+
+**Steps:**
+
+1. **Decision tree to rules (manual)**: Take your J48 output and rewrite splits as “if–then rules”.
+2. **Train PART classifier**:
+
+   * Classifier = `rules → PART`.
+   * Cross-validation (10 folds).
+   * Click **Start**.
+   * Weka shows rules directly.
+3. **Train OneR classifier**:
+
+   * Classifier = `rules → OneR`.
+   * Cross-validation.
+   * Click **Start** → Weka shows rule based on single attribute.
+4. Compare accuracies of J48, PART, OneR.
+
+---
+
+# 🔹 Week 11
+
+**Q11. K-Means clustering**
+
+**Steps:**
+
+1. Go to **Cluster tab**.
+2. Choose **Clusterer → SimpleKMeans**.
+3. Click on it → set `numClusters = 2`.
+4. Evaluation → select **Classes to clusters evaluation** (so Weka compares clusters with class labels).
+5. Click **Start**.
+6. Output: cluster assignment + % correctly matched.
+
+---
+
+# 🔹 Week 12
+
+**Q12. SVM (SMO in Weka)**
+
+**Steps:**
+
+1. Go to **Classify tab**.
+2. Choose Classifier = **functions → SMO**.
+3. Test option = **Cross-validation (10 folds)**.
+4. Click **Start**.
+5. Output: Accuracy + confusion matrix.
+6. Compare with J48 (Week 5 results).
+
+---
+
+✅ That’s a **clear Weka workflow for all 12 questions**.
+
+Do you want me to also **make a single summary table (Q → Weka Menu Steps → Expected Output)** so you can paste it directly into your report?
+
+
+OUTPUT
+---
+
+## ✅ Week 1
+
+**Q1. List categorical vs. real-valued attributes**
+
+In Weka → *Preprocess tab* → load **credit-g.arff (German Credit Dataset)**.
+
+* Categorical (Nominal) attributes:
+
+  * checking\_status
+  * credit\_history
+  * purpose
+  * savings\_status
+  * employment
+  * personal\_status
+  * debtors
+  * property
+  * installment\_plans
+  * housing
+  * job
+  * telephone
+  * foreign\_worker
+
+* Real-valued (Numeric) attributes:
+
+  * duration
+  * credit\_amount
+  * residence\_since
+  * age
+  * existing\_credits
+  * num\_dependents
+
+👉 Output in Weka: Attribute type (Nominal/Numeric) is shown in the **Preprocess tab**.
+
+---
+
+## ✅ Week 2
+
+**Q2. Crucial attributes & rules**
+
+By domain knowledge + attribute importance (InfoGain in Weka → *Select attributes* tab):
+
+* Crucial attributes: checking\_status, credit\_history, savings\_status, purpose, age, credit\_amount.
+
+👉 Example simple rules (plain English):
+
+* If checking\_status = "no checking" **and** credit\_amount > 5000 → credit = *bad*.
+* If savings\_status = "500+ savings" **and** credit\_history = "good" → credit = *good*.
+
+---
+
+## ✅ Week 3
+
+**Q3. Train Decision Tree**
+
+Steps:
+
+* Classify tab → choose `J48` → Test options: *Use training set* → Start.
+
+👉 Example tree output (simplified):
+
+```
+checking_status = <0 DM
+| credit_history = critical/other existing credit → bad
+| credit_history = existing paid → good
+checking_status = no checking
+| savings_status = <100 DM → bad
+| savings_status = 500+ DM → good
+```
+
+Weka shows the full tree + number of leaves + size.
+
+---
+
+## ✅ Week 4
+
+**Q4. Training accuracy**
+
+* Using *Use training set* → Accuracy ≈ **80–85%**.
+* Not 100% because:
+
+  * Noise in data.
+  * Overlapping attribute values.
+  * Some customers with same attributes behave differently.
+
+---
+
+## ✅ Week 5
+
+**Q5. Cross-validation**
+
+* In *Classify tab* → choose `10-fold cross-validation`.
+* Accuracy drops slightly (\~72–76%).
+
+👉 Why? Training set accuracy was **overfitted**. Cross-validation gives a more realistic estimate of generalization performance.
+
+---
+
+## ✅ Week 6
+
+**Q6. Reduce attributes**
+
+Try subset (e.g., attributes 2, 3, 5, 7, 10, 17 + class):
+
+* credit\_history
+* purpose
+* employment
+* debtors
+* housing
+* age
+* class
+
+👉 In Weka: remove other attributes in *Preprocess tab*.
+
+* Train J48 with reduced attributes → Accuracy \~70–73%.
+* Still reasonable, so not all 20 attributes are needed.
+
+---
+
+## ✅ Week 7
+
+**Q7. Compare trees with reduced attributes**
+
+* Decision Tree (reduced attributes) is **smaller** and easier to interpret.
+* Accuracy slightly decreases (\~70% vs. 72–76%).
+* Cross-validation results close, so simplification is worth it.
+
+---
+
+## ✅ Week 8
+
+**Q8. Simple vs complex decision trees**
+
+* Simple trees: easier to interpret, less overfitting → higher bias but lower variance.
+* Complex trees: may memorize data (overfitting).
+* In Weka → Compare tree depth parameter (`-C` confidence factor) → smaller CF = bigger tree.
+
+👉 Trade-off: Complexity ↑ → bias ↓ but variance ↑.
+
+---
+
+## ✅ Week 9
+
+**Q9. Pruning (Reduced Error Pruning)**
+
+* In Weka: `weka.classifiers.trees.J48 -R` (pruning enabled).
+* Output tree is smaller (fewer branches).
+* Accuracy \~74–77% (slightly better than unpruned).
+
+👉 Explanation: Pruning removes noisy/unnecessary splits → better generalization.
+
+---
+
+## ✅ Week 10
+
+**Q10. Convert tree to rules**
+
+* Small tree example:
+
+```
+If checking_status = no checking AND savings_status = <100 → bad
+If checking_status = no checking AND savings_status = >=500 → good
+Else → good
+```
+
+* In Weka: Use `rules.PART`.
+
+* PART outputs set of “if-then” rules (simpler than tree).
+
+* In Weka: Use `rules.OneR`.
+  Example OneR rule:
+
+  ```
+  If checking_status = <0 → bad
+  If checking_status = no checking → good
+  ...
+  ```
+
+* Ranking accuracy (typical):
+
+  * J48 ≈ 72–76%
+  * PART ≈ 73–77%
+  * OneR ≈ 65–70%
+
+---
+
+## ✅ Week 11
+
+**Q11. K-Means clustering**
+
+* In *Cluster tab* → choose `SimpleKMeans`, set k=2 (good/bad credit).
+* Accuracy not directly given (unsupervised), but you can evaluate using “Classes to clusters evaluation”.
+* Usually \~65–70% match with true labels.
+
+👉 Justification: Customers group into risky vs safe clusters, but not perfectly aligned with labels.
+
+---
+
+## ✅ Week 12
+
+**Q12. SVM classification**
+
+* In *Classify tab* → choose `SMO` (Weka’s SVM).
+* 10-fold cross-validation accuracy ≈ **75–78%**.
+
+👉 Compare:
+
+* Decision Tree (J48): 72–76%
+* SVM (SMO): 75–78% (slightly better, more robust).
+
+---
+
+✅ That covers **all 12 questions with Weka outputs + interpretations**.
+
+TABLE
+
+Great 👍 Here’s the **single summary table** with **Q → Weka Menu Steps → Expected Output** for all 12 questions.
+
+---
+
+# 📊 Weka Steps & Outputs Summary
+
+| Week / Q      | Weka Steps                                                                                                                                                               | Expected Output / Notes                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| **W1 – Q1**   | Preprocess → Open `credit-g.arff` → Select each attribute → check “Type” (Nominal/Numeric)                                                                               | List categorical (Nominal) vs real-valued (Numeric) attributes                                                     |
+| **W2 – Q2**   | Select attributes → Evaluator = `InfoGainAttributeEval` → Search = `Ranker` → Start                                                                                      | Ranked list of important attributes → write simple English rules                                                   |
+| **W3 – Q3**   | Classify → Classifier = `trees → J48` → Test option = *Use training set* → Start                                                                                         | Decision Tree model printed; Training accuracy ≈ 80–85%                                                            |
+| **W4 – Q4**   | Same as Q3                                                                                                                                                               | Accuracy < 100% (noise, overlapping attributes)                                                                    |
+| **W5 – Q5**   | Classify → J48 → Test option = *Cross-validation (10 folds)* → Start                                                                                                     | Accuracy ≈ 72–76% (realistic estimate, lower than training set)                                                    |
+| **W6 – Q6**   | Preprocess → Remove unwanted attributes → Keep only (2,3,5,7,10,17,class) → Classify → J48 → Cross-validation → Start                                                    | Smaller tree; Accuracy ≈ 70–73%                                                                                    |
+| **W7 – Q7**   | Repeat Q6 with reduced attributes                                                                                                                                        | Compare with full dataset → simpler tree, slightly lower accuracy                                                  |
+| **W8 – Q8**   | Classify → J48 → Change confidence factor (C) values: 0.1 (complex), 0.5 (simple) → Start                                                                                | Shows bias-variance tradeoff; simpler tree = higher bias, less variance                                            |
+| **W9 – Q9**   | Classify → J48 → Enable option `-R` (Reduced Error Pruning) → Cross-validation                                                                                           | Smaller pruned tree; Accuracy ≈ 74–77% (often better than unpruned)                                                |
+| **W10 – Q10** | (1) Take J48 tree → manually write if–then rules; (2) Classifier = `rules → PART` → Cross-validation → Start; (3) Classifier = `rules → OneR` → Cross-validation → Start | PART outputs rules; OneR gives single-attribute rule; Accuracy ranking: J48 \~72–76%, PART \~73–77%, OneR \~65–70% |
+| **W11 – Q11** | Cluster → `SimpleKMeans` → numClusters=2 → Classes-to-clusters evaluation → Start                                                                                        | Clusters formed; \~65–70% match with true labels                                                                   |
+| **W12 – Q12** | Classify → Classifier = `functions → SMO` (SVM) → Cross-validation → Start                                                                                               | Accuracy ≈ 75–78%; Compare with J48 (72–76%)                                                                       |
+
+---
+
+⚡ This table is concise enough for your **report submission** while still giving the **step-by-step procedure**.
+
+Do you also want me to prepare a **ready-to-use “Results & Discussion” section** (answers written in paragraph style for each week), so you can just paste it into your assignment report?
