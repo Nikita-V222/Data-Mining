@@ -1,0 +1,318 @@
+dmnikviva
+
+Here are **possible viva questions and their answers** based on your credit assessment project using Decision Trees, K-Means Clustering, and SVM:
+
+---
+
+### 🔹 **1. What are categorical and real-valued attributes in your dataset?**
+
+**Categorical (Nominal):**
+
+* checking\_status
+* credit history
+* purpose
+* savings\_status
+* employment
+* personal status
+* debtors
+* property
+* installment plans
+* housing
+* job
+* telephone
+* foreign worker
+
+**Real-Valued:**
+
+* duration
+* credit amount
+* residence
+* age
+* existing credits
+* num\_dependents
+
+---
+
+### 🔹 **2. Which attributes are crucial for credit assessment? Any sample rules?**
+
+**Important Attributes:**
+
+* credit history
+* checking\_status
+* credit amount
+* employment
+* existing credits
+* purpose
+
+**Sample Rules in Plain English:**
+
+* If credit history is ‘no credits/all paid’ and checking\_status is ‘>200’, then credit is good.
+* If employment is ‘<1 year’ and credit amount is > 5000, then credit is likely bad.
+* If savings\_status is ‘<100’ and existing credits > 2, then credit may be bad.
+
+---
+
+### 🔹 **3. What model did you get after training the Decision Tree on the complete dataset?**
+
+* Model is generated using the J48 classifier (Weka's implementation of C4.5).
+* Example:
+
+  ```
+  credit_history = no_credits → good  
+  credit_history = critical/other existing credit → bad  
+  checking_status = <0 → bad  
+  else → good  
+  ```
+* The tree uses splits on features like credit history, checking\_status, and credit amount.
+
+---
+
+### 🔹 **4. What % accuracy do you get when training and testing on the same dataset?**
+
+* You may get **90-100% accuracy**, but this is misleading.
+* Reason: **Overfitting** – the model memorizes training data and fails on unseen data.
+
+---
+
+### 🔹 **5. What is cross-validation? Why is it important?**
+
+* **Cross-validation** is a resampling technique where the dataset is divided into k folds.
+* Each fold is used as a test set once while the rest are used for training.
+* Helps get a realistic estimate of model performance.
+* Accuracy may drop slightly but will reflect generalization better.
+
+---
+
+### 🔹 **6. Can you use fewer attributes? Try using attributes 2, 3, 5, 7, 10, 17, and 21.**
+
+* Yes, models can be trained with fewer attributes.
+* These attributes still capture essential behavioral and financial patterns.
+* You can compare model performance with full and reduced attribute sets.
+
+---
+
+### 🔹 **7. What happens when you retrain the Decision Tree with selected attributes?**
+
+* The Decision Tree becomes **simpler and more interpretable**.
+* Accuracy might reduce slightly, but the tradeoff is better generalization and faster inference.
+* If accuracy remains comparable, it's better to use the simpler model.
+
+---
+
+### 🔹 **8. Is it better to prefer simple trees over complex ones?**
+
+* Yes. Simple trees are:
+
+  * More interpretable
+  * Less likely to overfit
+* Complex trees have **low bias but high variance**, meaning they fit training data too closely and fail on new data.
+
+---
+
+### 🔹 **9. What is Reduced Error Pruning? Does it help?**
+
+* It’s a pruning method that removes nodes if accuracy does not drop on a validation set.
+* Simplifies the tree without reducing predictive performance.
+* Usually leads to better generalization and may increase accuracy on test data.
+
+---
+
+### 🔹 **10. How do you convert a decision tree into if-then-else rules?**
+
+**Example Tree:**
+
+```
+if credit_history = good:
+   if credit_amount < 2000 → credit = good
+   else → credit = bad
+else → credit = bad
+```
+
+**Rules:**
+
+* IF credit\_history = good AND credit\_amount < 2000 THEN credit = good
+* ELSE credit = bad
+
+**PART Classifier Rules (Sample):**
+
+* IF checking\_status = <0 AND duration > 12 THEN credit = bad
+* IF employment = >7 yrs THEN credit = good
+
+**OneR Rule (Example):**
+
+* IF credit\_history = ‘critical/other existing credit’ → credit = bad
+* ELSE → credit = good
+
+**Ranking based on performance (may vary):**
+
+1. J48 (Decision Tree) – Best tradeoff of interpretability and accuracy
+2. PART – Slightly simpler but effective
+3. OneR – Fast and interpretable but lower accuracy
+
+---
+
+### 🔹 **11. How did you implement K-Means? Justify.**
+
+* K-Means was used to cluster customers based on features like age, credit amount, duration.
+* Helps in **unsupervised grouping** to find risk clusters.
+* Chose k using **elbow method**.
+* Clusters help in pre-segmenting credit profiles.
+
+---
+
+### 🔹 **12. How did SVM perform compared to Decision Trees?**
+
+* SVM usually provides **higher accuracy** with proper kernel selection.
+* Works well on high-dimensional spaces.
+* Harder to interpret compared to Decision Trees.
+* If non-linear data, RBF or polynomial kernels outperform linear models.
+
+---
+
+### 🔹 Other Possible Viva Questions:
+
+**Q: Why use Decision Trees for credit scoring?**
+A: They are interpretable, can handle both categorical and numerical data, and provide quick rule-based outputs.
+
+**Q: What's the main drawback of Decision Trees?**
+A: Overfitting, especially with noisy or imbalanced data.
+
+**Q: What’s the difference between J48 and CART?**
+A: J48 is Weka’s version of C4.5 (uses information gain ratio), while CART uses Gini index and binary splits.
+
+**Q: How is the performance measured?**
+A: Using accuracy, precision, recall, F1-score, and cross-validation.
+
+**Q: What is entropy and information gain?**
+A: Entropy measures impurity. Information gain is the reduction in entropy after a split.
+
+---
+Based on your **syllabus image**, here are **viva questions and answers** organized **unit-wise** relevant to your Credit Assessment project and the topics mentioned:
+
+---
+
+## ✅ **UNIT 1: Introduction to Data Mining**
+
+### 🔹 **1. What is Data Mining?**
+
+**Ans:** Data Mining is the process of discovering patterns and knowledge from large amounts of data using techniques from statistics, machine learning, and databases.
+
+### 🔹 **2. What is KDD?**
+
+**Ans:** Knowledge Discovery in Databases (KDD) is the overall process of converting raw data into useful information. Data mining is one step in this process.
+
+### 🔹 **3. What is the role of data preprocessing in Data Mining?**
+
+**Ans:** Data preprocessing involves:
+
+* Cleaning (handling missing values/noise)
+* Integration (merging data sources)
+* Reduction (reducing volume)
+* Transformation (scaling, normalization)
+* Discretization and Binarization (converting continuous data)
+
+### 🔹 **4. What are similarity and dissimilarity measures?**
+
+**Ans:** These are quantitative ways to measure how alike or different two data objects are. Example: Euclidean distance, Cosine similarity.
+
+---
+
+## ✅ **UNIT 2: Association Rules**
+
+### 🔹 **5. What is the APRIORI algorithm used for?**
+
+**Ans:** APRIORI is used to generate frequent item sets and association rules in market basket analysis.
+
+### 🔹 **6. Define support and confidence.**
+
+* **Support:** Frequency of itemset in the dataset.
+* **Confidence:** Likelihood of item Y being bought if item X is bought.
+
+### 🔹 **7. Difference between FP-Growth and APRIORI?**
+
+**Ans:**
+
+* APRIORI generates candidate sets and is slower.
+* FP-Growth uses a prefix tree and avoids candidate generation → faster.
+
+### 🔹 **8. What are maximal and closed frequent item sets?**
+
+**Ans:**
+
+* **Maximal**: No superset is frequent.
+* **Closed**: Superset has a different support count.
+
+---
+
+## ✅ **UNIT 3: Classification** (Core for your project)
+
+### 🔹 **9. What are classification techniques?**
+
+* Decision Trees (J48)
+* K-Nearest Neighbors
+* Naïve Bayes
+* Bayesian Belief Networks
+* SVM (Support Vector Machine)
+
+### 🔹 **10. How do Decision Trees work?**
+
+**Ans:** They split data based on the best attribute using Information Gain or Gini Index to classify examples.
+
+### 🔹 **11. What is Overfitting in a Decision Tree?**
+
+**Ans:** When the tree memorizes training data and fails on unseen data → high training accuracy but poor test performance.
+
+### 🔹 **12. What is the role of pruning?**
+
+**Ans:** Pruning reduces complexity by removing unnecessary nodes, helping prevent overfitting.
+
+### 🔹 **13. What is KNN?**
+
+**Ans:** A lazy learner that classifies a data point based on the majority class of its k-nearest neighbors.
+
+---
+
+## ✅ **UNIT 4: Clustering** (Used in K-Means part of your project)
+
+### 🔹 **14. What is the difference between Classification and Clustering?**
+
+**Ans:**
+
+* Classification is **supervised** (with labeled data).
+* Clustering is **unsupervised** (no labels, groups similar data).
+
+### 🔹 **15. How does K-means clustering work?**
+
+**Ans:** It randomly initializes k centroids, assigns points to nearest centroid, and updates centroids until convergence.
+
+### 🔹 **16. What is the elbow method?**
+
+**Ans:** A technique to find the optimal number of clusters (k) by plotting WCSS (within-cluster sum of squares) vs. k.
+
+### 🔹 **17. What are DBSCAN strengths?**
+
+**Ans:** Can find arbitrarily shaped clusters, handles noise, and doesn’t require specifying the number of clusters.
+
+---
+
+## ✅ **UNIT 5: Advanced Applications**
+
+### 🔹 **18. What is data stream mining?**
+
+**Ans:** Mining real-time, continuous flows of data (e.g., credit card transactions).
+
+### 🔹 **19. What are the types of data mining applications?**
+
+* Time-series data (stock prices, credit usage)
+* Spatial data
+* Text and Web data
+* Multimedia mining
+
+### 🔹 **20. How is text mining useful in finance/credit?**
+
+**Ans:** Text mining helps extract sentiment or insights from customer reviews, feedback, or transaction descriptions.
+
+---
+
+
+

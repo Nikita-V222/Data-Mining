@@ -1,0 +1,94 @@
+dmnikqs
+
+Week 1
+
+List all the categorical (or nominal) attributes and the real-valued attributes separately.
+Attributes:
+
+checking_status
+
+credit history
+
+purpose
+
+savings_status
+
+employment
+
+personal status
+
+debtors
+
+property
+
+installment plans
+
+housing
+
+job
+
+telephone
+
+foreign worker
+
+duration
+
+credit amount
+
+residence
+
+age
+
+existing credits
+
+num_dependents
+
+Week 2
+
+What attributes do you think might be crucial in making the credit assessment? Come up with some simple rules in plain English using your selected attributes.
+
+Week 3
+
+Train a Decision Tree using the complete dataset as the training data. Report the model obtained after training.
+
+Week 4
+
+Suppose you use your above model trained on the complete dataset, and classify credit good/bad for each of the examples in the dataset. What % of examples can you classify correctly? Why do you think you cannot get 100% training accuracy?
+
+Week 5
+
+Solving the problem encountered in the previous question is using cross-validation? Describe what cross-validation is briefly. Train a Decision Tree again using cross-validation and report your results. Does your accuracy increase/decrease? Why?
+
+Week 6
+
+Another question might be, do you really need to input so many attributes to get good results? Maybe only a few would do. For example, you could try just having attributes 2, 3, 5, 7, 10, 17 (and 21, the class attribute naturally!). Try out some combinations.
+
+Week 7
+
+Train your Decision Tree again and report the Decision Tree and cross-validation results. Are they significantly different from results?
+
+Week 8
+
+Do you think it is a good idea to prefer simple decision trees instead of having long complex decision trees? How does the complexity of a Decision Tree relate to the bias of the model?
+
+Week 9
+
+How make Decision Trees simpler by pruning the nodes. One approach is to use Reduced Error Pruning – Explain this idea briefly. Try reduced error pruning for training your Decision Trees using cross-validation and report the Decision Tree you obtain. Also, report your accuracy using the pruned model. Does your accuracy increase?
+
+Week 10
+
+How can you convert a Decision Tree into "if-then-else rules". Make up your own small Decision Tree consisting of 2–3 levels and convert it into a set of rules.
+There also exist different classifiers that output the model in the form of rules – one such classifier in Weka is rules.PART, train this model and report the set of rules obtained.
+Sometimes just one attribute can be good enough in making the decision, yes, just one! Can you predict what attribute that might be in this dataset? OneR classifier uses a single attribute to make decisions (it chooses the attribute based on minimum error). Report the rule obtained by training a OneR classifier. Rank the performance of J48, PART and OneR.
+
+Week 11
+
+Implement K-means clustering and justify your answers.
+
+Week 12
+
+Implement SVM algorithm and report accuracy and compare the result with decision tree results.
+
+Week 13
+
+Internal Test
