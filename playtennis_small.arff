@@ -1,0 +1,18 @@
+@RELATION playtennis
+
+@ATTRIBUTE Weather {Overcast,Rain,Sunny}
+@ATTRIBUTE Temperature {Cool,Hot,Mild}
+@ATTRIBUTE Wind {Strong,Weak}
+@ATTRIBUTE Play {Yes,No}
+
+@DATA
+Sunny,Hot,Weak,No
+Sunny,Hot,Strong,No
+Overcast,Hot,Weak,Yes
+Rain,Mild,Weak,Yes
+Rain,Cool,Weak,Yes
+Rain,Cool,Strong,No
+Overcast,Mild,Strong,Yes
+Sunny,Cool,Weak,Yes
+Sunny,Mild,Strong,No
+Rain,Mild,Strong,Yes
