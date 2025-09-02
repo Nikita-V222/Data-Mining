@@ -1,0 +1,158 @@
+dmnik2
+
+Awesome — here’s a clean, practical walkthrough to execute all **12 tasks in WEKA**, *plus* a downloadable guide you can keep open while you work.
+
+[Download the step-by-step WEKA guide (Markdown)](sandbox:/mnt/data/weka_credit_lab_guide.md)
+
+Below is the same content inline, trimmed to the essentials so you can start immediately.
+
+---
+
+# Before you start (one-time setup)
+
+1. Open **WEKA → Explorer** → **Preprocess** → **Open file…** → `credit-g.arff` (German Credit; ships with WEKA).
+2. Bottom-right **Class** = `class` (`good`/`bad`).
+3. (Optional but helpful for SVM/K-means) **Filter → Choose → unsupervised → attribute → Standardize → Apply**.
+
+---
+
+# Q1 — Categorical vs real-valued attributes
+
+* **Where to see:** **Preprocess** tab → **Type** column.
+
+**Categorical (nominal):** `checking_status`, `credit_history`, `purpose`, `savings_status`, `employment`, `personal_status`, `other_debtors` (a.k.a. debtors), `property_magnitude` (property), `installment_plans`, `housing`, `job`, `telephone`, `foreign_worker`.
+
+**Real-valued (numeric):** `duration`, `credit_amount`, `residence_since` (residence), `age`, `existing_credits`, `num_dependents`.
+
+**Output to submit:** The two lists above.
+
+---
+
+# Q2 — Crucial attributes + simple English rules
+
+**WEKA steps:**
+Explorer → **Select attributes** → Evaluator: `InfoGainAttributeEval` → Search: `Ranker` → **Start**. Note the ranking.
+
+**Output to submit:** Top 5–7 attributes + 3–5 plain-English rules derived from ranking and domain sense (e.g., *If checking\_status is “<0” and duration > 24, risk ↑ (bad)*).
+
+---
+
+# Q3 — Decision Tree on full training set (J48)
+
+**Steps:** **Classify** → Choose `trees → J48` → **Test options: Use training set** → **Start**.
+
+**Output to submit:**
+
+* Correctly Classified Instances (%), Kappa, Confusion Matrix
+* The tree (right-click **Result list** → *Visualize tree* / *Save model*).
+  *(Example format)*
+
+```
+Correctly Classified Instances  79.5 %
+Kappa statistic                 0.38
+Confusion Matrix:
+ a  b   <-- classified as
+620 80 | a = good
+125 175| b = bad
+```
+
+*(Numbers are illustrative; yours will differ.)*
+
+---
+
+# Q4 — Why not 100% training accuracy?
+
+**Steps:** Already computed in Q3.
+**Output to submit:** Your training accuracy + short reason (noise/overlap in data, J48 pruning, limited signal; 100% would indicate overfitting).
+
+---
+
+# Q5 — 10-fold Cross-Validation (J48)
+
+**Steps:** **Classify** → `J48` → **Test options: Cross-validation = 10 folds** → **Start**.
+
+**Output to submit:** CV accuracy, Kappa, confusion matrix, tree size. Compare with Q3 (CV is usually lower).
+
+---
+
+# Q6 — Do we need many attributes? Try subsets
+
+**Steps:** **Preprocess** → select attributes to drop → **Remove**.
+Try 2–3 different subsets, e.g.:
+
+* S1: `checking_status`, `duration`, `credit_amount`, `age`, `credit_history`, `savings_status`
+* S2: `checking_status`, `duration`, `purpose`, `housing`, `employment`
+  Then **Classify** → `J48` → **10-fold CV** → **Start**.
+
+**Output to submit:** For each subset: list, CV accuracy, tree size.
+
+---
+
+# Q7 — Train again on your best subset & compare
+
+**Steps:** Keep best subset from Q6 → **Classify** → `J48` → **10-fold CV** → **Start**.
+
+**Output to submit:** CV accuracy + tree; comment if it differs from Q5 (all features).
+
+---
+
+# Q8 — Simple vs complex trees; relate to bias
+
+**Steps (control complexity via J48 options – click the classifier name):**
+
+* Simple (more pruning): `-C 0.4 -M 10`
+* Complex (less pruning): `-C 0.05 -M 1`  *(or try `-U` unpruned)*
+  Evaluate each with **10-fold CV**.
+
+**Output to submit:** For both runs: CV accuracy + tree size; conclude: simpler → higher bias/lower variance; complex → lower bias/higher variance.
+
+---
+
+# Q9 — Reduced-Error Pruning (REP)
+
+**Steps:** `J48` options → check **`-R`** (use REP) and set **`-N`** (e.g., 3 or 10 folds for pruning). **10-fold CV** → **Start**.
+
+**Output to submit:** CV accuracy + tree size; note if REP improves vs Q8.
+
+---
+
+# Q10 — Rules: hand-convert a tiny tree; PART & OneR
+
+**A) Manual:** Pick a 2–3-level section of your J48 tree → write rules (IF…THEN).
+**B) PART:** **Classify** → `rules → PART` → **10-fold CV** → **Start** → copy the printed rule list + accuracy.
+**C) OneR:** **Classify** → `rules → OneR` → (optional `-B` min bucket size, e.g., 6) → **10-fold CV** → **Start** → copy the single-attribute rule + accuracy.
+**D) Rank:** Compare CV accuracy of **J48**, **PART**, **OneR**.
+
+**Output to submit:** Your rules + table ranking all three by accuracy.
+
+---
+
+# Q11 — K-means clustering (SimpleKMeans)
+
+**Steps:**
+
+1. (**Recommended**) **Preprocess** → Filter `NominalToBinary`, then `Standardize`.
+2. **Cluster** tab → Choose `SimpleKMeans` → set **`-N 2`** (try 3–5 too).
+3. Check **Classes to clusters evaluation**, ensure **Class** is `class`.
+4. Mode: **Use training set** → **Start**.
+
+**Output to submit:** Cluster sizes, centroids, and the **classes↔clusters** table with % correctly matched (unsupervised agreement).
+
+---
+
+# Q12 — SVM (SMO) and compare to J48
+
+**Steps:** **Classify** → `functions → SMO` → set kernel to **RBFKernel** (`-G` gamma \~ 0.01 to start; `-C` \~ 1.0).
+Tip: wrap with `meta → CVParameterSelection` to tune `C` and `gamma`.
+Evaluate with **10-fold CV**.
+
+**Output to submit:** CV accuracy, Kappa, confusion matrix. Compare to your best J48.
+
+---
+
+## What your “outputs” should look like (summary)
+
+* For each experiment: **Algorithm + key options**, **Evaluation mode (Train / 10-CV)**, **Accuracy %**, **Kappa**, **Confusion Matrix**, **Model size** (tree leaves or #rules), and 1–2 lines of **interpretation**.
+* Save artifacts: right-click a result → **Save result buffer**; J48 → **Visualize tree** → **Save** (PNG).
+
+If you want, I can also generate a one-page table you can paste your numbers into (CSV/Excel).

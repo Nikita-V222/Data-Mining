@@ -1,0 +1,185 @@
+dmnik4
+
+# 🔹 Detailed Steps in Weka for Each Question
+
+---
+
+### **Q1: List categorical & real-valued attributes**
+
+1. Open **Weka → Explorer → Preprocess**.
+2. Load dataset (`credit-g.arff` or your `.csv` converted to `.arff`).
+3. On the **Preprocess panel**, you will see all attributes listed.
+
+   * Nominal attributes show possible values (e.g., *checking\_status = {<0, 0≤X<200, ≥200}*).
+   * Numeric attributes show only type "numeric".
+4. Note down:
+
+   * **Categorical (Nominal):** checking\_status, credit\_history, purpose, savings\_status, employment, personal\_status, property, installment\_plans, housing, job, telephone, foreign\_worker, residence.
+   * **Numeric (Real-valued):** duration, credit\_amount, age, existing\_credits, num\_dependents.
+
+✅ Output: Attribute separation list.
+
+---
+
+### **Q2: Crucial attributes & simple rules**
+
+1. Stay in **Preprocess → Visualize All** to view scatter plots and histograms.
+2. Attributes that strongly separate classes (good/bad credit) are *credit\_history, checking\_status, duration, credit\_amount*.
+3. Simple English rules example:
+
+   * If `checking_status = no checking` **AND** `credit_history = poor` → likely *bad credit*.
+   * If `credit_history = good` **AND** `duration < 12 months` → likely *good credit*.
+
+✅ Output: Rules (manually interpreted).
+
+---
+
+### **Q3: Train a Decision Tree**
+
+1. Go to **Classify → Choose → trees → J48** (Weka’s C4.5 decision tree).
+2. Use **Use training set**.
+3. Click **Start**.
+4. Output will show:
+
+   * Decision tree structure.
+   * Training accuracy (will be high, \~80–85%).
+
+✅ Output: Full J48 tree + accuracy %.
+
+---
+
+### **Q4: Evaluate on training data**
+
+1. Already done in Q3 (using **Use training set**).
+2. Weka output shows **Correctly Classified Instances = XX%**.
+
+   * Expect around 85%.
+3. Reason not 100%: **overfitting avoidance, noise in data, real-world uncertainty**.
+
+✅ Output: Accuracy % + reasoning.
+
+---
+
+### **Q5: Cross-validation**
+
+1. In **Classify tab**, select **Cross-validation** → 10 folds.
+2. Run J48 again.
+3. Compare accuracy with Q3.
+
+   * Training set accuracy (Q3) is usually higher.
+   * Cross-validation accuracy is realistic (\~70–75%).
+
+✅ Output: Cross-validation accuracy + comparison with training.
+
+---
+
+### **Q6: Reduce attributes**
+
+1. In **Preprocess tab**, uncheck all except attributes 2, 3, 5, 7, 10, 17 (and class).
+2. Run **Classify → J48** again.
+3. Compare accuracy with full dataset.
+
+   * Accuracy usually drops slightly but remains decent.
+
+✅ Output: Accuracy with reduced attributes.
+
+---
+
+### **Q7: Train with reduced vs full attributes**
+
+1. Run Decision Tree with:
+
+   * Full attributes (Q5).
+   * Reduced attributes (Q6).
+2. Compare **tree size, rules generated, and accuracy**.
+3. Report difference: smaller trees, sometimes slightly less accurate, but easier to interpret.
+
+✅ Output: Accuracy comparison table.
+
+---
+
+### **Q8: Simple vs complex trees**
+
+1. In **J48 options**, set:
+
+   * `-C` (confidence factor) → lower value (e.g., 0.05) → larger complex tree.
+   * Higher value (e.g., 0.5) → simpler pruned tree.
+2. Run with both settings.
+3. Compare complexity vs accuracy.
+
+   * Simple tree = higher bias, lower variance.
+   * Complex tree = lower bias, risk of overfitting.
+
+✅ Output: Accuracy + interpretation.
+
+---
+
+### **Q9: Reduced Error Pruning**
+
+1. Go to **Classify → trees → ReducedErrorPruningTree (REPTree)**.
+2. Choose **10-fold CV**.
+3. Run and record accuracy.
+4. Compare with unpruned J48.
+
+   * Usually accuracy improves or stays similar, tree size reduces.
+
+✅ Output: Accuracy + pruned tree results.
+
+---
+
+### **Q10: Convert Decision Tree to Rules**
+
+1. Use **Classify → rules → PART**.
+
+   * Output shows “if–then” rules directly.
+2. Use **Classify → rules → OneR**.
+
+   * Selects the best single attribute and outputs one rule (e.g., *checking\_status → good/bad*).
+3. Compare accuracy:
+
+   * J48 > PART > OneR (usually).
+
+✅ Output: Rules + accuracy + ranking.
+
+---
+
+### **Q11: K-means clustering**
+
+1. Go to **Cluster → Choose → SimpleKMeans**.
+2. Set **Number of clusters = 2** (good/bad).
+3. Run clustering.
+4. Weka output:
+
+   * Cluster centroids for numeric attributes.
+   * Distribution of categorical attributes.
+5. Manually map clusters to class labels (compare with actual good/bad).
+
+✅ Output: Cluster centroids + % cluster assignment.
+
+---
+
+### **Q12: SVM vs Decision Tree**
+
+1. Go to **Classify → functions → SMO (Support Vector Machine)**.
+2. Run with **10-fold cross-validation**.
+3. Compare accuracy with Decision Tree (Q5).
+
+   * SVM usually \~75–80% accuracy, sometimes better than J48.
+
+✅ Output: Accuracy of SMO vs J48.
+
+---
+
+# 📊 Example Output Snapshot (Typical Results)
+
+* J48 Training Accuracy: \~85%
+* J48 Cross-validation: \~72–75%
+* Reduced attributes: \~70–73%
+* PART rules: \~74%
+* OneR rules: \~63%
+* KMeans clustering: matches \~65–70% with class
+* SMO (SVM): \~78–80%
+
+---
+
+👉 Would you like me to prepare a **ready-made results table** (with placeholders for you to fill in Weka’s exact % values after running) so you can directly submit it in your lab report?

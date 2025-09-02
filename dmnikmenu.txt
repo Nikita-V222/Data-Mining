@@ -1,0 +1,16 @@
+dmnikmenu
+
+1. **Categorical vs Real-Valued Attributes**
+2. **Crucial Attributes and Simple Rules**
+3. **Training a Decision Tree**
+4. **Training Accuracy and Its Limitations**
+5. **Cross-Validation and Accuracy Comparison**
+6. **Using Fewer Attributes for Assessment**
+7. **Decision Tree with Selected Attributes**
+8. **Simplicity vs Complexity in Decision Trees**
+9. **Reduced Error Pruning in Decision Trees**
+10. **Converting Decision Trees to Rules & Comparing Rule-Based Classifiers**
+11. **K-Means Clustering Implementation**
+12. **SVM Implementation and Comparison**
+13. **Internal Test**
+
