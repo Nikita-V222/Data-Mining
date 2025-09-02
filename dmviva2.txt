@@ -1,0 +1,109 @@
+dmviva2
+
+---
+
+# 🔹 Viva Questions & Answers (Q1–Q12)
+
+---
+
+### **Q1. Categorical & Real-valued attributes**
+
+**Q (Examiner):** How do you identify categorical and numeric attributes in data mining?
+**A (You):** In data mining, attributes are either *nominal* (categorical) or *numeric* (real-valued). Categorical attributes take discrete values like {yes, no} or {low, medium, high}, whereas numeric attributes are continuous values like age or income. Identifying them is important because algorithms treat them differently — e.g., clustering needs numeric values, while decision trees can handle both.
+
+---
+
+### **Q2. Crucial attributes & rules**
+
+**Q:** How do you find important attributes, and why do rules matter?
+**A:** Important attributes are those that strongly influence the target variable. We can identify them by analyzing distributions, correlations, or through feature selection. In credit scoring, attributes like credit history, checking status, and loan duration are crucial. Rules like “if credit history is poor → bad credit” provide simple, interpretable models that decision-makers can trust.
+
+---
+
+### **Q3. Training a Decision Tree**
+
+**Q:** Why are decision trees used, and what does training accuracy show?
+**A:** Decision trees (like J48) split data based on attribute values to classify records. Training accuracy shows how well the tree fits the given dataset. However, high training accuracy doesn’t guarantee generalization — the model may have memorized patterns, which is called overfitting.
+
+---
+
+### **Q4. Training accuracy not 100%**
+
+**Q:** Why is training accuracy not always perfect?
+**A:** Real-world data contains noise, missing values, and overlapping classes. Also, attributes may not perfectly predict the class. This uncertainty prevents models from achieving 100% accuracy, even on training data. It reflects the complexity of real-world problems.
+
+---
+
+### **Q5. Cross-validation**
+
+**Q:** Why do we use cross-validation in machine learning?
+**A:** Cross-validation tests model performance on unseen data by splitting the dataset into folds. It prevents overfitting and gives a realistic estimate of accuracy. Typically, accuracy from cross-validation is lower than training accuracy, but it reflects generalization better.
+
+---
+
+### **Q6. Reduced attributes**
+
+**Q:** What happens if we use fewer attributes?
+**A:** Reducing attributes removes less informative features, which simplifies the model. The decision tree becomes smaller and easier to interpret. Accuracy may drop slightly, but the model avoids overfitting and trains faster. This reflects the principle of the “curse of dimensionality” in ML.
+
+---
+
+### **Q7. Compare reduced vs full**
+
+**Q:** Which is better — full attributes or reduced attributes?
+**A:** Full attributes give higher accuracy but produce a more complex model. Reduced attributes give simpler models, which are easier to interpret and often generalize better. The choice depends on application: in finance, interpretability is often preferred over slightly higher accuracy.
+
+---
+
+### **Q8. Simple vs complex trees**
+
+**Q:** What is the trade-off between simple and complex trees?
+**A:** Simple trees are pruned and avoid overfitting, but may miss some patterns (high bias). Complex trees capture more detail (low bias) but risk memorizing noise (high variance). In ML, this is called the **bias–variance trade-off**. The best tree balances interpretability and accuracy.
+
+---
+
+### **Q9. Reduced Error Pruning**
+
+**Q:** What is pruning and why is it used?
+**A:** Pruning removes branches that do not improve predictive accuracy. Reduced Error Pruning uses a validation set to decide which branches to cut. It simplifies the model, prevents overfitting, and often improves generalization. This is essential in decision tree learning.
+
+---
+
+### **Q10. Decision Trees to Rules**
+
+**Q:** How do rules compare to trees?
+**A:** Decision trees can be converted into “if–then” rules, making models more interpretable.
+
+* **PART** generates a compact set of rules with good accuracy.
+* **OneR** uses a single attribute, making it extremely simple but less accurate.
+  Rules are often preferred in domains like finance or healthcare, where interpretability is critical.
+
+---
+
+### **Q11. K-means clustering**
+
+**Q:** What is clustering and how does K-means work?
+**A:** Clustering is an *unsupervised learning* method that groups similar records together. K-means assigns each record to the nearest centroid, minimizing within-cluster variance. With K=2, the dataset splits into two groups resembling “good” and “bad” credit. Unlike classification, clustering doesn’t use class labels, so accuracy is evaluated by comparing clusters with known classes.
+
+---
+
+### **Q12. SVM vs Decision Tree**
+
+**Q:** Which is better — SVM or Decision Tree?
+**A:** Support Vector Machines (SVMs) are powerful for numeric data and usually give higher accuracy, especially with well-separated classes. Decision Trees are less accurate but easier to interpret. In credit scoring, SVMs may be preferred for accuracy, but decision trees or rules are often chosen for interpretability.
+
+---
+
+# ✅ Core Takeaways for Viva
+
+* **Attributes:** categorical vs numeric matter for algorithms.
+* **Decision Trees:** interpretable but can overfit.
+* **Cross-validation:** realistic performance check.
+* **Pruning:** reduces complexity, avoids overfitting.
+* **Rules:** simple, human-readable models.
+* **Clustering:** unsupervised grouping.
+* **SVM:** strong classifier, but less interpretable.
+
+---
+
+👉 Do you also want me to prepare **short 2–3 line viva answers** (quick memory-friendly) for last-minute revision, or keep it at this detailed level?
